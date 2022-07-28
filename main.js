@@ -3,23 +3,23 @@
 //© Copyright 2022 · IMACS - Institute for Mathematics & Computer Science
 
 var rows = [];
-const addtemplate = [+1, +1, +1, -1, -1, -1, +2, +2, -2, -2, +3, -3, -4, +4, -5, +5];
+const addtemplate = [+1, +1, -1, -1, -1, +2, +2, -2, -2, +3, -3, -4, +4, -5, +5];
 const mediumdivstemplate = [4, 5, 6, 4, 5, 6, 4, 5, 6, 5];
 const largedivstemplate = [7, 8, 9, 10, 7, 8, 9, 10, 8, 9];
-let numrows = 21; //must be odd
-let numcols = 16;
-var myrowindex = 1;
-var mycolindex = 1;
+const numrows = 21; //must be odd
+const numcols = 15; //prefer odd
+var myrowindex, mycolindex;
 var currentnumber = 5040;
-let $container, $number;
+var score = 11;
+let $container, $score;
 var lastmove = "";
 
 $(document).ready(function () {
 	$container = $("div.container");
-	$number = $("div.infoval.number");
-	let width = $container.width();
-	let height = (width * numrows) / numcols;
-	$container.height(height);
+	$score = $("div.infoval.number");
+	// let width = $container.width();
+	// let height = (width * numrows) / numcols;
+	// $container.height(height);
 	$container.css("grid-template-rows", "repeat(" + numrows + ", 1fr)").css("grid-template-columns", "repeat(" + numcols + ", 1fr)");
 	startGame();
 	$("button.newgame").click(startGame);
@@ -40,23 +40,25 @@ $(document).ready(function () {
 
 	$("div.container").on("touchstart", function (event) {
 		event.preventDefault();
-		touchstartX = event.pageX;
-		touchstartY = event.pageY;
+		touchstartX = event.originalEvent.changedTouches[0].pageX;
+		touchstartY = event.originalEvent.changedTouches[0].pageY;
 	});
 
 	$("div.container").on("touchend", function (event) {
 		event.preventDefault();
-		touchendX = event.pageX;
-		touchendY = event.pageY;
+		touchendX = event.originalEvent.changedTouches[0].pageX;
+		touchendY = event.originalEvent.changedTouches[0].pageY;
 		handleGesure();
 	});
 
 	function handleGesure() {
-		if (touchendX < touchstartX - 100) {
+		if (Math.abs(touchendX - touchstartX) > 100 && Math.abs(touchendY - touchstartY) > 100) {
+			console.log("swipe unclear");
+		} else if (touchendX < touchstartX - 150) {
 			registerMove("left");
-		} else if (touchendX > touchstartX + 100) {
+		} else if (touchendX > touchstartX + 150) {
 			registerMove("right");
-		} else if (touchendY < touchstartY - 100) {
+		} else if (touchendY > touchstartY + 150) {
 			registerMove("down");
 		}
 	}
@@ -68,42 +70,62 @@ function registerMove(move) {
 		if (myrowindex % 2 == 1 && lastmove != "left" && mycolindex < numcols) executeMove(move);
 	} else if (move == "left") {
 		if (myrowindex % 2 == 1 && lastmove != "right" && mycolindex > 1) executeMove(move);
-	} else if (move == "down") {
+	} else if (move == "down" && myrowindex < numrows) {
 		let numbelow = rows[myrowindex][mycolindex - 1];
-		if (myrowindex < numrows && myrowindex % 2 == 1 && currentnumber % numbelow == 0) executeMove(move);
-		else if (myrowindex < numrows && myrowindex % 2 == 0) executeMove(move);
+		if (myrowindex % 2 == 1 && currentnumber % numbelow == 0) executeMove(move);
+		else if (myrowindex % 2 == 0) executeMove(move);
 	}
 
 	function executeMove(move) {
 		lastmove = move;
+		if (currentnumber <= 0) return;
 		if (move == "right") {
-			$(".cell[row=" + myrowindex + "][col=" + mycolindex + "]").removeClass("active");
+			$(".cell[row=" + myrowindex + "][col=" + mycolindex + "]")
+				.removeClass("active")
+				.addClass("traveled");
 			mycolindex++;
 			currentnumber += rows[myrowindex - 1][mycolindex - 1];
-			$number.html(currentnumber);
-			$(".cell[row=" + myrowindex + "][col=" + mycolindex + "]").addClass("active");
 		} else if (move == "left") {
-			$(".cell[row=" + myrowindex + "][col=" + mycolindex + "]").removeClass("active");
+			$(".cell[row=" + myrowindex + "][col=" + mycolindex + "]")
+				.removeClass("active")
+				.addClass("traveled");
 			mycolindex--;
 			currentnumber += rows[myrowindex - 1][mycolindex - 1];
-			$number.html(currentnumber);
-			$(".cell[row=" + myrowindex + "][col=" + mycolindex + "]").addClass("active");
 		} else if (move == "down") {
-			$(".cell[row=" + myrowindex + "][col=" + mycolindex + "]").removeClass("active");
+			$(".cell[row=" + myrowindex + "][col=" + mycolindex + "]")
+				.removeClass("active")
+				.addClass("traveled");
 			myrowindex++;
 			if (myrowindex % 2 == 0) currentnumber = currentnumber / rows[myrowindex - 1][mycolindex - 1];
 			else currentnumber += rows[myrowindex - 1][mycolindex - 1];
-			$number.html(currentnumber);
-			$(".cell[row=" + myrowindex + "][col=" + mycolindex + "]").addClass("active");
+			if (myrowindex % 2 == 0) score--;
+			$score.html(score);
+		}
+		//check for win condition
+		if (currentnumber <= 0) {
+			currentnumber = 0;
+			$(".infobox").css("background", "lightgreen");
+		}
+		$(".cell[row=" + myrowindex + "][col=" + mycolindex + "]")
+			.addClass("active")
+			.append($("<span class='tooltip'>" + currentnumber + "</span>"));
+		//check for loss condition
+		if (myrowindex == numrows && ((mycolindex == 1 && move == "left") || (mycolindex == numcols && move == "right"))) {
+			$(".infobox").css("background", "pink");
+			$score.html("0");
 		}
 	}
 }
 
 function startGame() {
 	myrowindex = 1;
-	mycolindex = 1;
+	mycolindex = 8;
+	score = 11;
+	lastmove = "";
 	currentnumber = 5040;
-	$number.html(currentnumber);
+	$score.html(score);
+	$(".tooltip").remove();
+	$(".infobox").css("background", "white");
 	rows = [];
 	generateGame(numrows, numcols);
 	let mynumber = 0;
@@ -116,13 +138,13 @@ function startGame() {
 				myvalue = "";
 				myclass = "empty";
 			} else if (r % 2 == 0) {
-				myvalue = "&#247;" + mynumber;
+				myvalue = mynumber;
 				myclass = "divide";
 			} else if (mynumber > 0) {
-				myvalue = "+" + mynumber;
+				myvalue = mynumber;
 				myclass = "add";
 			} else {
-				myvalue = mynumber;
+				myvalue = Math.abs(mynumber);
 				myclass = "sub";
 			}
 			let $cell = $("<div>")
@@ -135,7 +157,9 @@ function startGame() {
 			$container.append($cell);
 		}
 	}
-	$(".cell[row=1][col=1]").addClass("active");
+	$(".cell[row=1][col=8]")
+		.addClass("active")
+		.append($("<span class='tooltip'>" + currentnumber + "</span>"));
 }
 
 function generateGame(numrows, numcols) {
@@ -146,7 +170,7 @@ function generateGame(numrows, numcols) {
 		rows.push(makeDivRow());
 	}
 	rows.push(makeAddRow());
-	rows[0][0] = 0;
+	rows[0][7] = 0;
 
 	function makeAddRow() {
 		let array = addtemplate.slice(0);
