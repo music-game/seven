@@ -1,0 +1,200 @@
+* {
+	box-sizing: border-box;
+}
+body {
+	background: #f5f7fa;
+	color: #3c3b3d;
+	margin: 0;
+	overflow-y: auto;
+	padding: 0;
+	font-family: "Roboto", sans-serif;
+	font-size: 20px;
+	font-weight: 700;
+}
+button {
+	background: white;
+	border: 2px solid #3c3b3d;
+	border-radius: 10px;
+	color: inherit;
+	padding: 5px 10px;
+	font: inherit;
+	font-size: 16px;
+	height: 40px;
+	text-align: center;
+	display: block;
+	margin: auto;
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
+button:hover {
+	background: rgba(0, 0, 0, 0.15);
+}
+button[disabled] {
+	border-color: rgba(0, 0, 0, 0.15);
+	color: rgba(0, 0, 0, 0.15);
+	background: rgba(0, 0, 0, 0.15);
+}
+button.showsettings,
+button.showhelp {
+	border-radius: 20px;
+	height: 40px;
+	width: 40px;
+	padding: 0;
+	font-size: 20px;
+	margin: 0;
+}
+button.active {
+	background: grey;
+}
+button.inactive {
+	background: white;
+}
+svg {
+	display: inline-block;
+	vertical-align: middle;
+}
+.board {
+	width: 100%;
+	border-radius: 10px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.titlebar {
+	display: flex;
+	justify-content: space-between;
+	width: min(95%);
+	height: auto;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.title {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: "Roboto", sans-serif;
+	/* font-family: Charcoal, fantasy; */
+	font-weight: 9000;
+	font-size: 30px;
+	height: 40px;
+}
+.subtitle {
+	text-align: center;
+	font: inherit;
+	font-size: 20px;
+	padding: 5px;
+}
+.setup {
+	display: flex;
+	justify-content: space-between;
+	width: min(360px, 85%);
+	height: auto;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+.infobox {
+	display: flex;
+	justify-content: space-between;
+	width: 150px;
+	height: 45px;
+	border: 3px solid #3c3b3d;
+	border-radius: 8px;
+	text-align: center;
+	padding: 2px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 2px;
+	margin-bottom: 10px;
+	font: inherit;
+}
+.infotxt {
+	text-align: right;
+	padding: 5px;
+	height: 35px;
+}
+.infoval {
+	width: 70px;
+	text-align: center;
+	padding: 5px;
+	height: 35px;
+}
+.settingstab,
+.helptab {
+	position: absolute;
+	overflow: auto;
+	top: 15px;
+	left: 50%;
+	width: min(500px, 90%);
+	height: 635px;
+	transform: translate(-50%, 0);
+	background-color: #a0cecb;
+	z-index: 100;
+	border: 3px solid #3c3b3d;
+	border-radius: 8px;
+	text-align: center;
+	padding: 20px;
+	font: inherit;
+}
+::-webkit-scrollbar {
+	width: 12px;
+	/* width of the entire scrollbar */
+}
+::-webkit-scrollbar-track {
+	background: grey;
+	/* color of the tracking area */
+}
+::-webkit-scrollbar-thumb {
+	background-color: white;
+	/* color of the scroll thumb */
+	border-radius: 20px;
+	/* roundness of the scroll thumb */
+	border: 3px solid #3c3b3d;
+	/* creates padding around scroll thumb */
+}
+* {
+	/* for firefox */
+	scrollbar-width: thin;
+	scrollbar-color: #3c3b3d grey;
+}
+.copyright {
+	position: absolute;
+	transform: translate(-50%, 0);
+	width: min(250px, 80%);
+	font-size: 12px;
+	bottom: 10px;
+	left: 50%;
+}
+.container {
+	width: 95%;
+	margin: auto;
+	background: grey;
+	display: grid;
+	gap: 2px;
+	padding: 2px;
+}
+.cell {
+	grid-row-end: span 1;
+	grid-column-end: span 1;
+	font-size: 16px;
+	text-align: center;
+}
+.cell.add {
+	background-color: aqua;
+}
+.cell.sub {
+	background-color: pink;
+}
+.cell.divide {
+	background-color: lightgreen;
+}
+.cell.empty {
+	background-color: white;
+}
+.cell.active {
+	background-color: red;
+}
