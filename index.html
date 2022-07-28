@@ -6,7 +6,7 @@
 		<link rel="stylesheet" href="style.css" />
 		<script src="jquery.min.js"></script>
 		<script src="js.cookie.min.js"></script>
-		<script src="main.js?version=2"></script>
+		<script src="main.js?version=3"></script>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
@@ -39,6 +39,30 @@
 			</div>
 
 			<div class="container"></div>
+		</div>
+		<!-- Help Page -->
+		<div class="helptab" hidden="true">
+			<div class="title">Help</div>
+			<button class="closetab">Close</button>
+			<div class="paragraph left">
+				<h2>How to Play</h2>
+				<p>
+					Your position on the game board is indicated by the red square with your number above it. You can move right, left, or down by
+					swipping in that direction or using your keyboard's arrow keys. In each row, once you start moving right or left, you cannot go
+					the other direction until you move down to the next row.
+				</p>
+				<p>
+					As you move into a red or blue square, the number on that square will be added (blue) or subtracted (red) from your current
+					number. As you move into a green square, your number will be divided by the number on that square. You can only move into a green
+					square if the division leaves no remainder.
+				</p>
+				<p>
+					Your goal is to get your number to 0 with as few divisions as possible. Each time you use a division, your score will decrease by
+					1.
+				</p>
+			</div>
+
+			<button class="closetab">Close</button>
 		</div>
 	</body>
 </html>

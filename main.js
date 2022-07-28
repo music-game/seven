@@ -11,15 +11,14 @@ const numcols = 15; //prefer odd
 var myrowindex, mycolindex;
 var currentnumber = 5040;
 var score = 11;
-let $container, $score;
+let $container, $score, $helptab;
 var lastmove = "";
 
 $(document).ready(function () {
 	$container = $("div.container");
 	$score = $("div.infoval.number");
-	// let width = $container.width();
-	// let height = (width * numrows) / numcols;
-	// $container.height(height);
+	$helptab = $("div.helptab");
+
 	$container.css("grid-template-rows", "repeat(" + numrows + ", 1fr)").css("grid-template-columns", "repeat(" + numcols + ", 1fr)");
 	startGame();
 	$("button.newgame").click(startGame);
@@ -30,6 +29,15 @@ $(document).ready(function () {
 			else if (e.key == "ArrowLeft") registerMove("left");
 			else if (e.key == "ArrowDown") registerMove("down");
 		}
+	});
+
+	$("button.showhelp").click(function () {
+		hideTabs();
+		$helptab.slideDown();
+	});
+
+	$("button.closetab").click(function () {
+		hideTabs();
 	});
 
 	//swipe detection
@@ -63,6 +71,10 @@ $(document).ready(function () {
 		}
 	}
 });
+
+function hideTabs() {
+	$helptab.slideUp();
+}
 
 function registerMove(move) {
 	console.log(move);

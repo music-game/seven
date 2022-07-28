@@ -143,6 +143,7 @@ svg {
 	text-align: center;
 	padding: 20px;
 	font: inherit;
+	font-size: 16px;
 }
 ::-webkit-scrollbar {
 	width: 12px;
@@ -224,7 +225,7 @@ svg {
 	padding: 5px;
 	border-radius: 6px;
 	visibility: visible;
-	z-index: 1000;
+	z-index: 50;
 }
 .cell.active span.tooltip::after {
 	content: "";
