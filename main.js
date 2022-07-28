@@ -31,15 +31,35 @@ $(document).ready(function () {
 			else if (e.key == "ArrowDown") registerMove("down");
 		}
 	});
-	$("div.container").on("swipeleft", function (event) {
-		registerMove("left");
+
+	//swipe detection
+	var touchstartX = 0;
+	var touchstartY = 0;
+	var touchendX = 0;
+	var touchendY = 0;
+
+	$("div.container").on("touchstart", function (event) {
+		event.preventDefault();
+		touchstartX = event.pageX;
+		touchstartY = event.pageY;
 	});
-	$("div.container").on("swiperight", function (event) {
-		registerMove("right");
+
+	$("div.container").on("touchend", function (event) {
+		event.preventDefault();
+		touchendX = event.pageX;
+		touchendY = event.pageY;
+		handleGesure();
 	});
-	$("div.container").on("swipedown", function (event) {
-		registerMove("down");
-	});
+
+	function handleGesure() {
+		if (touchendX < touchstartX - 100) {
+			registerMove("left");
+		} else if (touchendX > touchstartX + 100) {
+			registerMove("right");
+		} else if (touchendY < touchstartY - 100) {
+			registerMove("down");
+		}
+	}
 });
 
 function registerMove(move) {
