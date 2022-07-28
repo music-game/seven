@@ -24,6 +24,7 @@ $(document).ready(function () {
 	startGame();
 	$("button.newgame").click(startGame);
 	document.addEventListener("keydown", (e) => {
+		e.preventDefault();
 		if (!e.repeat) {
 			if (e.key == "ArrowRight") registerMove("right");
 			else if (e.key == "ArrowLeft") registerMove("left");
