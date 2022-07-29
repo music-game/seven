@@ -60,13 +60,13 @@ $(document).ready(function () {
 	});
 
 	function handleGesure() {
-		if (Math.abs(touchendX - touchstartX) > 100 && Math.abs(touchendY - touchstartY) > 100) {
+		if (Math.abs(touchendX - touchstartX) > 50 && Math.abs(touchendY - touchstartY) > 50) {
 			console.log("swipe unclear");
-		} else if (touchendX < touchstartX - 150) {
+		} else if (touchendX < touchstartX - 75) {
 			registerMove("left");
-		} else if (touchendX > touchstartX + 150) {
+		} else if (touchendX > touchstartX + 75) {
 			registerMove("right");
-		} else if (touchendY > touchstartY + 150) {
+		} else if (touchendY > touchstartY + 75) {
 			registerMove("down");
 		}
 	}
