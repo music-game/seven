@@ -163,6 +163,7 @@ function registerMove(move) {
 }
 
 function startGame() {
+	gameinprogress = false;
 	for (var i = 0; i < timeouts.length; i++) {
 		clearTimeout(timeouts[i]);
 	}
