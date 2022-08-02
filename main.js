@@ -2,6 +2,7 @@
 
 //© Copyright 2022 · IMACS - Institute for Mathematics & Computer Science
 
+var timeouts = [];
 var rows = [];
 const addtemplate = [+1, +1, -1, -1, -1, +2, +2, -2, -2, +3, -3, -4, +4, -5, +5];
 const mediumdivstemplate = [4, 5, 6, 4, 5, 6, 4, 5, 6, 5];
@@ -122,11 +123,14 @@ function registerMove(move) {
 			} else {
 				currentnumber += rows[myrowindex - 1][mycolindex - 1];
 				if (myrowindex < numrows - 3) {
+					let thisrow = myrowindex;
 					for (let r = 0; r <= 1; r++) {
 						for (let c = 1; c <= numcols; c++) {
-							setTimeout(function () {
-								$(".cell[row=" + (r + myrowindex + 3) + "][col=" + c + "]").removeClass("hidden");
-							}, r * 500 + c * 25);
+							timeouts.push(
+								setTimeout(function () {
+									$(".cell[row=" + (r + thisrow + 3) + "][col=" + c + "]").removeClass("hidden");
+								}, r * 500 + c * 25)
+							);
 						}
 					}
 				}
@@ -155,12 +159,17 @@ function registerMove(move) {
 }
 
 function startGame() {
+	for (var i = 0; i < timeouts.length; i++) {
+		clearTimeout(timeouts[i]);
+	}
+	timeouts = [];
 	myrowindex = 1;
 	mycolindex = 8;
 	score = 11;
 	lastmove = "";
 	currentnumber = 5040;
 	$score.html(score);
+	$(".cell").remove();
 	$(".tooltip").remove();
 	$(".infobox").css("background", "white");
 	rows = [];
@@ -200,9 +209,11 @@ function startGame() {
 		.append($("<span class='tooltip center'>" + currentnumber + "</span>"));
 	for (let r = 1; r <= 5; r++) {
 		for (let c = 1; c <= numcols; c++) {
-			setTimeout(function () {
-				$(".cell[row=" + r + "][col=" + c + "]").removeClass("hidden");
-			}, (r - 1) * 500 + c * 25);
+			timeouts.push(
+				setTimeout(function () {
+					$(".cell[row=" + r + "][col=" + c + "]").removeClass("hidden");
+				}, (r - 1) * 500 + c * 25)
+			);
 		}
 	}
 }
