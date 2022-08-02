@@ -40,6 +40,13 @@ $(document).ready(function () {
 		hideTabs();
 	});
 
+	window.addEventListener("beforeunload", (event) => {
+		// Cancel the event as stated by the standard.
+		event.preventDefault();
+		// Chrome requires returnValue to be set.
+		event.returnValue = "";
+	});
+
 	//swipe detection
 	var touchstartX = 0;
 	var touchstartY = 0;
@@ -108,10 +115,22 @@ function registerMove(move) {
 				.removeClass("active")
 				.addClass("traveled");
 			myrowindex++;
-			if (myrowindex % 2 == 0) currentnumber = currentnumber / rows[myrowindex - 1][mycolindex - 1];
-			else currentnumber += rows[myrowindex - 1][mycolindex - 1];
-			if (myrowindex % 2 == 0) score--;
-			$score.html(score);
+			if (myrowindex % 2 == 0) {
+				currentnumber = currentnumber / rows[myrowindex - 1][mycolindex - 1];
+				score--;
+				$score.html(score);
+			} else {
+				currentnumber += rows[myrowindex - 1][mycolindex - 1];
+				if (myrowindex < numrows - 3) {
+					for (let r = 0; r <= 1; r++) {
+						for (let c = 1; c <= numcols; c++) {
+							setTimeout(function () {
+								$(".cell[row=" + (r + myrowindex + 3) + "][col=" + c + "]").removeClass("hidden");
+							}, r * 500 + c * 25);
+						}
+					}
+				}
+			}
 		}
 		//check for win condition
 		if (currentnumber <= 0) {
@@ -120,11 +139,17 @@ function registerMove(move) {
 		}
 		$(".cell[row=" + myrowindex + "][col=" + mycolindex + "]")
 			.addClass("active")
-			.append($("<span class='tooltip'>" + currentnumber + "</span>"));
+			.append($("<span class='tooltip center'>" + currentnumber + "</span>"));
 		//check for loss condition
 		if (myrowindex == numrows && ((mycolindex == 1 && move == "left") || (mycolindex == numcols && move == "right"))) {
 			$(".infobox").css("background", "pink");
 			$score.html("0");
+		}
+		//see if we need to shift tooltip
+		if (mycolindex >= numcols) {
+			$("div.cell.active span.tooltip").removeClass("center").addClass("right");
+		} else if (mycolindex <= 1) {
+			$("div.cell.active span.tooltip").removeClass("center").addClass("left");
 		}
 	}
 }
@@ -162,6 +187,7 @@ function startGame() {
 			let $cell = $("<div>")
 				.html(myvalue)
 				.addClass("cell " + myclass)
+				.addClass("hidden")
 				.attr("row", r)
 				.attr("col", c)
 				.css("grid-row-start", r)
@@ -171,7 +197,14 @@ function startGame() {
 	}
 	$(".cell[row=1][col=8]")
 		.addClass("active")
-		.append($("<span class='tooltip'>" + currentnumber + "</span>"));
+		.append($("<span class='tooltip center'>" + currentnumber + "</span>"));
+	for (let r = 1; r <= 5; r++) {
+		for (let c = 1; c <= numcols; c++) {
+			setTimeout(function () {
+				$(".cell[row=" + r + "][col=" + c + "]").removeClass("hidden");
+			}, (r - 1) * 500 + c * 25);
+		}
+	}
 }
 
 function generateGame(numrows, numcols) {

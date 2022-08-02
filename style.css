@@ -212,12 +212,25 @@ svg {
 .cell.active {
 	background-color: red;
 }
+.cell.hidden {
+	background-color: lightgray !important;
+	color: lightgray !important;
+}
+.cell:not(.hidden) {
+	animation: bkgrd 2s normal;
+}
+@keyframes bkgrd {
+	from {
+		background-color: darkgray;
+		color: darkgray;
+	}
+}
+
 .cell.active span.tooltip {
 	font-size: 30px;
 	transform: translate(-50%, -50%);
 	position: absolute;
 	bottom: 60%;
-	left: 50%;
 	background-color: red;
 	min-width: 50px;
 	color: #fff;
@@ -231,13 +244,29 @@ svg {
 	content: "";
 	position: absolute;
 	top: 95%;
-	left: 50%;
 	margin-left: -10px;
 	border-width: 10px;
 	border-style: solid;
 	border-color: red transparent transparent transparent;
 }
-
+.cell.active span.tooltip.center {
+	left: 50%;
+}
+.cell.active span.tooltip.center::after {
+	left: 50%;
+}
+.cell.active span.tooltip.right {
+	left: -30%;
+}
+.cell.active span.tooltip.right::after {
+	left: 75%;
+}
+.cell.active span.tooltip.left {
+	left: 130%;
+}
+.cell.active span.tooltip.left::after {
+	left: 25%;
+}
 .cell.traveled span.tooltip {
 	position: absolute;
 	visibility: hidden;
