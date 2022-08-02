@@ -4,6 +4,7 @@
 
 var timeouts = [];
 var rows = [];
+var gameinprogress = false;
 const addtemplate = [+1, +1, -1, -1, -1, +2, +2, -2, -2, +3, -3, -4, +4, -5, +5];
 const mediumdivstemplate = [4, 5, 6, 4, 5, 6, 4, 5, 6, 5];
 const largedivstemplate = [7, 8, 9, 10, 7, 8, 9, 10, 8, 9];
@@ -42,10 +43,10 @@ $(document).ready(function () {
 	});
 
 	window.addEventListener("beforeunload", (event) => {
-		// Cancel the event as stated by the standard.
-		event.preventDefault();
-		// Chrome requires returnValue to be set.
-		event.returnValue = "";
+		if (gameinprogress) {
+			event.preventDefault();
+			event.returnValue = "";
+		}
 	});
 
 	//swipe detection
@@ -97,6 +98,7 @@ function registerMove(move) {
 	}
 
 	function executeMove(move) {
+		gameinprogress = true;
 		lastmove = move;
 		if (currentnumber <= 0) return;
 		if (move == "right") {
@@ -140,6 +142,7 @@ function registerMove(move) {
 		if (currentnumber <= 0) {
 			currentnumber = 0;
 			$(".infobox").css("background", "lightgreen");
+			gameinprogress = false;
 		}
 		$(".cell[row=" + myrowindex + "][col=" + mycolindex + "]")
 			.addClass("active")
@@ -148,6 +151,7 @@ function registerMove(move) {
 		if (myrowindex == numrows && ((mycolindex == 1 && move == "left") || (mycolindex == numcols && move == "right"))) {
 			$(".infobox").css("background", "pink");
 			$score.html("0");
+			gameinprogress = false;
 		}
 		//see if we need to shift tooltip
 		if (mycolindex >= numcols) {
