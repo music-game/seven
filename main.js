@@ -23,6 +23,13 @@ $(document).ready(function () {
 
 	$container.css("grid-template-rows", "repeat(" + numrows + ", 1fr)").css("grid-template-columns", "repeat(" + numcols + ", 1fr)");
 	startGame();
+
+	let myfirstvisit = Cookies.get("seven_firstvisit");
+	if (myfirstvisit == undefined) {
+		Cookies.set("seven_firstvisit", "false", { expires: 3650 });
+		$helptab.slideDown();
+	}
+
 	$("button.newgame").click(startGame);
 	document.addEventListener("keydown", (e) => {
 		e.preventDefault();
@@ -98,6 +105,9 @@ function registerMove(move) {
 	}
 
 	function executeMove(move) {
+		if (!gameinprogress) {
+			$(".swipeme").css("display", "none");
+		}
 		gameinprogress = true;
 		lastmove = move;
 		if (currentnumber <= 0) return;
@@ -220,6 +230,12 @@ function startGame() {
 				}, (r - 1) * 500 + c * 25)
 			);
 		}
+	}
+	if (window.matchMedia("(pointer: coarse)").matches) {
+		$(".swipeme")
+			.css("display", "flex")
+			.width($container.width() * 0.7)
+			.height($container.height() * 0.5);
 	}
 }
 
