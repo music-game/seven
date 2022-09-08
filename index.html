@@ -5,11 +5,16 @@
 		<title>Seven!</title>
 		<link rel="stylesheet" href="style.css" />
 		<script defer data-domain="music-game.github.io/seven" src="https://plausible.io/js/plausible.js"></script>
+		<link rel="shortcut icon" href="icons/192x192-icon.png" />
+		<link rel="apple-touch-icon" href="icons/192x192-icon.png" />
 		<script src="libs/jquery.min.js"></script>
 		<script src="main.js"></script>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+		<script>
+			navigator.serviceWorker.register("sw.js");
+		</script>
 	</head>
 	<body>
 		<div class="board">

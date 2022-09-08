@@ -1,0 +1,27 @@
+{
+"name": "Seven!",
+"short_name": "Seven!",
+"start_url": "index.html",
+"display": "standalone",
+"description": "A math game where, starting with 7!, you need to divide, add, and subtract by moving through the grid. Get to zero with as few divisions as possible.",
+"lang": "en",
+"dir": "auto",
+"theme_color": "#000000",
+"background_color": "#000000",
+"orientation": "any",
+"icons": [
+	{
+		"src": "icons/512x512-icon.png",
+		"sizes": "512x512",
+		"type": "image/png",
+		"purpose": "any maskable"
+	},
+	{
+		"src": "icons/192x192-icon.png",
+		"sizes": "192x192",
+		"type": "image/png",
+		"purpose": "any"
+	}
+],
+"prefer_related_applications": "false"
+}
