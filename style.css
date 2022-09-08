@@ -167,12 +167,10 @@ svg {
 	scrollbar-color: #3c3b3d grey;
 }
 .copyright {
-	position: absolute;
-	transform: translate(-50%, 0);
 	width: min(250px, 80%);
+	text-align: center;
 	font-size: 12px;
-	bottom: 10px;
-	left: 50%;
+	margin: 20px auto auto auto;
 }
 .container {
 	max-width: 95%;
