@@ -140,7 +140,7 @@ svg {
 	z-index: 100;
 	border: 3px solid #3c3b3d;
 	border-radius: 8px;
-	text-align: center;
+	text-align: left;
 	padding: 20px;
 	font: inherit;
 	font-size: 16px;
