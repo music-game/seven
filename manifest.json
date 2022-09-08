@@ -6,8 +6,8 @@
 "description": "A math game where, starting with 7!, you need to divide, add, and subtract by moving through the grid. Get to zero with as few divisions as possible.",
 "lang": "en",
 "dir": "auto",
-"theme_color": "#000000",
-"background_color": "#000000",
+"theme_color": "#f5f7fa",
+"background_color": "#f5f7fa",
 "orientation": "any",
 "icons": [
 	{
