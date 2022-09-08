@@ -24,9 +24,9 @@ $(document).ready(function () {
 	$container.css("grid-template-rows", "repeat(" + numrows + ", 1fr)").css("grid-template-columns", "repeat(" + numcols + ", 1fr)");
 	startGame();
 
-	let myfirstvisit = Cookies.get("seven_firstvisit");
+	let myfirstvisit = localStorage.getItem("seven_firstvisit");
 	if (myfirstvisit == undefined) {
-		Cookies.set("seven_firstvisit", "false", { expires: 3650 });
+		localStorage.setItem("seven_firstvisit", "false");
 		$helptab.slideDown();
 	}
 
