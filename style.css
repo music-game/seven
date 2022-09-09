@@ -269,7 +269,6 @@ svg {
 	position: absolute;
 	visibility: hidden;
 }
-
 .swipeme {
 	position: absolute;
 	display: none;
@@ -283,4 +282,28 @@ svg {
 	background: white;
 	opacity: 50%;
 	z-index: 100;
+}
+.installprompt {
+	text-align: center;
+	font-size: min(20px, 4vw);
+	background-color: white;
+	width: min(400px, 90vw);
+	position: absolute;
+	bottom: 10px;
+	left: 50%;
+	transform: translate(-50%, 0);
+	border-radius: 10px;
+	padding: 10px 10px 2px 10px;
+	z-index: 100000;
+}
+.installprompt span {
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+}
+.installprompt .close {
+	position: absolute;
+	right: 5px;
+	top: 5px;
 }

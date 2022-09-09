@@ -29,6 +29,7 @@ $(document).ready(function () {
 		localStorage.setItem("seven_firstvisit", "false");
 		$helptab.slideDown();
 	}
+	installPrompt();
 
 	$("button.newgame").click(startGame);
 	document.addEventListener("keydown", (e) => {
@@ -107,6 +108,7 @@ function registerMove(move) {
 	function executeMove(move) {
 		if (!gameinprogress) {
 			$(".swipeme").css("display", "none");
+			$("div.installprompt").remove();
 		}
 		gameinprogress = true;
 		lastmove = move;
@@ -281,5 +283,36 @@ function generateGame(numrows, numcols) {
 			newArray.push(spliced[0]);
 		}
 		return newArray;
+	}
+}
+
+function installPrompt() {
+	if (/iPhone|iPad|iPod/i.test(navigator.userAgent) && window.navigator.standalone !== true) {
+		let $prompt = $(
+			"<div>" +
+				'<svg class="close" fill="DodgerBlue" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 8.933-2.721-2.722c-.146-.146-.339-.219-.531-.219-.404 0-.75.324-.75.749 0 .193.073.384.219.531l2.722 2.722-2.728 2.728c-.147.147-.22.34-.22.531 0 .427.35.75.751.75.192 0 .384-.073.53-.219l2.728-2.728 2.729 2.728c.146.146.338.219.53.219.401 0 .75-.323.75-.75 0-.191-.073-.384-.22-.531l-2.727-2.728 2.717-2.717c.146-.147.219-.338.219-.531 0-.425-.346-.75-.75-.75-.192 0-.385.073-.531.22z" fill-rule="nonzero"/></svg>' +
+				"<div>Install this App to your iOS Device</div><div>Just tap" +
+				'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="40" height="40" fill="DodgerBlue"><path d="M30.3 13.7L25 8.4l-5.3 5.3-1.4-1.4L25 5.6l6.7 6.7z"/><path d="M24 7h2v21h-2z"/><path d="M35 40H15c-1.7 0-3-1.3-3-3V19c0-1.7 1.3-3 3-3h7v2h-7c-.6 0-1 .4-1 1v18c0 .6.4 1 1 1h20c.6 0 1-.4 1-1V19c0-.6-.4-1-1-1h-7v-2h7c1.7 0 3 1.3 3 3v18c0 1.7-1.3 3-3 3z"/></svg>' +
+				"then 'Add to Home Screen'</div>" +
+				"</div>"
+		).addClass("installprompt");
+		$("body").append($prompt);
+		$("svg.close").click(function () {
+			$prompt.remove();
+		});
+	}
+	if (/Android/i.test(navigator.userAgent) && !window.matchMedia("(display-mode: standalone)").matches) {
+		let $prompt = $(
+			"<div>" +
+				'<svg class="close" fill="DodgerBlue" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 8.933-2.721-2.722c-.146-.146-.339-.219-.531-.219-.404 0-.75.324-.75.749 0 .193.073.384.219.531l2.722 2.722-2.728 2.728c-.147.147-.22.34-.22.531 0 .427.35.75.751.75.192 0 .384-.073.53-.219l2.728-2.728 2.729 2.728c.146.146.338.219.53.219.401 0 .75-.323.75-.75 0-.191-.073-.384-.22-.531l-2.727-2.728 2.717-2.717c.146-.147.219-.338.219-.531 0-.425-.346-.75-.75-.75-.192 0-.385.073-.531.22z" fill-rule="nonzero"/></svg>' +
+				"<div>Install this App to your Android Device</div><div>Just tap" +
+				'<svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" width="40" height="40" fill="black" xmlns="http://www.w3.org/2000/svg"><path d="m12 16.495c1.242 0 2.25 1.008 2.25 2.25s-1.008 2.25-2.25 2.25-2.25-1.008-2.25-2.25 1.008-2.25 2.25-2.25zm0-6.75c1.242 0 2.25 1.008 2.25 2.25s-1.008 2.25-2.25 2.25-2.25-1.008-2.25-2.25 1.008-2.25 2.25-2.25zm0-6.75c1.242 0 2.25 1.008 2.25 2.25s-1.008 2.25-2.25 2.25-2.25-1.008-2.25-2.25 1.008-2.25 2.25-2.25z"/></svg>' +
+				"then 'Install app'</div>" +
+				"</div>"
+		).addClass("installprompt");
+		$("body").append($prompt);
+		$("svg.close").click(function () {
+			$prompt.remove();
+		});
 	}
 }
