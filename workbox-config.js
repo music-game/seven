@@ -19,5 +19,12 @@ module.exports = {
 				cacheName: "assets",
 			},
 		},
+		{
+			urlPattern: /\/$/,
+			handler: "StaleWhileRevalidate",
+			options: {
+				cacheName: "home",
+			},
+		},
 	],
 };
